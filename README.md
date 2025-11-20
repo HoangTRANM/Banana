@@ -1,6 +1,6 @@
 # Business Use Case: Banana Quality Assessment for Market Allocation
 
-## Contributoers: Ilnes, Philomène, TRAN Ngoc Minh Hoang
+## Contributoers: Lnes Simond-Charbinat, Philomène, TRAN Ngoc Minh Hoang
   
 
 ## Business Challenge
@@ -46,7 +46,7 @@ Softness - softness of fruit
 HarvestTime - amount of time passed from harvesting of the fruit
 Ripeness - ripness of fruit
 Acidity - acidity of fruit
-Quality - quality of fruit
+Quality - quality of fruit (Good/Bad)
 
 ## 3. Reproducibility — How to Run From a Fresh Clone
 **Precise instructions to reproduce your results: where to copy the dataset file, python version, how to install dependencies, how to run the training pipeline, and anything else needed from a fresh copy of the repository**
@@ -157,22 +157,32 @@ Train/test split = 80 / 20
 ## 5. Experiment tracking: what did you change, why and how it impacted the metrics.
 
 - LinearSVC
-Change: Removed unnecessary parameters.
+Change: Removed unnecessary parameters between 2 trials (the default parameters from the documentation and only keep the needed parameters)
+-> the result doesn't change, which means we did it right
+  
 Impact: Accuracy unchanged at 0.879. Underfits, linear boundary insufficient.
 
 - KNeighborsClassifier
 Change: Tested n_neighbors = 3,5,7,9 and weights = uniform/distance.
+trial_number = 1 - knc_1 = KNeighborsClassifier(n_neighbors = 5, # choose k=5 for now, odd because 1 or 0 weights = 'distance')
+trial_number = 2 - knc_2 = KNeighborsClassifier(n_neighbors = 5, # choose k=5 for now weights = 'uniform')
+... Trail_number = 8
+We was testing all combinations of the key hyperparameters we identified (n_neighbors and weights).
+
 Impact: Accuracy ~0.978–0.981, minor changes; best with k=5. Stable and strong.
 
 - SVC (RBF)
-Change: Simplified hyperparameters (C=1.0, gamma='scale').
+Change: Removed unnecessary parameters between 2 trials (the default parameters from the documentation and only keep the needed parameters)
+-> the result doesn't change, which means we did it right
+
 Impact: Accuracy 0.98125, best individual model.
 
 - Ensemble (Voting)
 Change: Combined LinearSVC + KNN + SVC.
 
 Impact: Accuracy same as SVC (0.98125)
-choose model 98% is a lot because overfitting since not a lo rows / choose svc because of best results and best TP TF
+
+Choosing a model with 98% accuracy is risky due to potential overfitting, especially when the dataset has few rows. We chose SVC because it provides the best overall results, including the highest true positives and true negatives.
 
 
 
