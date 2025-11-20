@@ -176,6 +176,9 @@ weighted avg       0.98      0.98      0.98      1600
 Change: we removed unnecessary parameters.
 Impact: the accuracy score is unchanged at 0.879375
 Conclusion: the model is not accurate enough; it may be because of underfitting. But we got a bad confusion matrix with 105 false positives and 88 false negatives.
+-> In order to find the best performance, we perform a Grid Search to automatically test several parameter combinations:
+   Best LinearSVC parameters : {'C': 1, 'max_iter': 2000, 'random_state': 42}
+   Test Accuracy: 0.879375
 
 - KNeighbors Classifier
 Change: we tested n_neighbors = 3,5,7,9 (the main 4 ones used) and weights = uniform/distance.
@@ -186,6 +189,9 @@ Conclusion: the best pair up was with a n_neighbors = 7, the distance didn't mat
 Change: we simplified the hyperparameters, we kept C = 1.0, gamma = 'scale'.
 Impact: the accuracy is unchanged as well at 0.98125.
 Conclusion: we got a high accuracy score, meaning overfitting, because of the small number of rows in the dataset. But we got a good confusion matrix.
+-> following exactly the same methodology than for the models above, we used GridSearchCV for optimizing the hyperparameters:
+   Best SVC params: {'C': 10, 'gamma': 'scale', 'kernel': 'rbf'}
+   SVC Accuracy: 0.984375
 
 - Ensemble (Voting Classifier)
 Change: we did an ensemble of LinearSVC, KNeighbors Classifier, and SVC with the best parameters found above.
